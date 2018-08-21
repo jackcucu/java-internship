@@ -1,6 +1,11 @@
-package com.expertsoft;
+package net.atomate;
 
-import com.expertsoft.model.*;
+import net.atomate.model.AddressInfo;
+import net.atomate.model.Customer;
+import net.atomate.model.Order;
+import net.atomate.model.OrderItem;
+import net.atomate.model.PaymentInfo;
+import net.atomate.model.Product;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -11,7 +16,8 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class TestUtils {
+public class TestUtils
+{
 
     private static final long SEED = 1731349857;
 
@@ -41,11 +47,13 @@ public class TestUtils {
     private static final List<String> countries = new ArrayList<>();
     private static final List<String> streets = new ArrayList<>();
     private static final List<String> cardNumbers = new ArrayList<>();
-
+    private static final List<PaymentInfo> generatedPaymentInfos = generatePaymentInfos();
     private static long orderId = 0;
     private static long productId = 0;
+    private static final List<Product> generatedProducts = generateProducts();
 
-    static {
+    static
+    {
         productNames.add("Apple iPhone 8");
         productNames.add("Motorola RAZR V3");
         productNames.add("Nokia 1600");
@@ -109,30 +117,33 @@ public class TestUtils {
         cardNumbers.add("6677 5432 9587 1670");
     }
 
-    private static final List<Product> generatedProducts = generateProducts();
-    private static final List<PaymentInfo> generatedPaymentInfos = generatePaymentInfos();
-
-    public static List<Product> generateProducts() {
+    public static List<Product> generateProducts()
+    {
         return generate(productNames.size(), TestUtils::createProduct);
     }
 
-    public static List<Customer> generateCustomers() {
+    public static List<Customer> generateCustomers()
+    {
         return generate(customerNames.size(), TestUtils::createCustomer);
     }
 
-    public static List<Order> generateOrders(final int count) {
+    public static List<Order> generateOrders(final int count)
+    {
         return generate(count, TestUtils::createOrder);
     }
 
-    public static List<PaymentInfo> generatePaymentInfos() {
+    public static List<PaymentInfo> generatePaymentInfos()
+    {
         return generate(cardNumbers.size(), TestUtils::createPaymentInfo);
     }
 
-    public static List<OrderItem> generateOrderItems(final int count) {
+    public static List<OrderItem> generateOrderItems(final int count)
+    {
         return generate(count, TestUtils::createOrderItem);
     }
 
-    private static Customer createCustomer(final int i) {
+    private static Customer createCustomer(final int i)
+    {
         final int idx = i % customerEmails.size();
         final Customer customer = new Customer();
         customer.setEmail(customerEmails.get(idx));
@@ -142,7 +153,8 @@ public class TestUtils {
         return customer;
     }
 
-    private static Order createOrder() {
+    private static Order createOrder()
+    {
         final Order order = new Order();
         orderId += rand.nextInt(ORDER_ID_INCREMENT);
         order.setOrderId(orderId);
@@ -151,7 +163,8 @@ public class TestUtils {
         return order;
     }
 
-    private static List<OrderItem> getDistinctOrderItems() {
+    private static List<OrderItem> getDistinctOrderItems()
+    {
         return generateOrderItems(randomInt(MIN_ORDER_ITEMS, MAX_ORDER_ITEMS))
                 .stream()
                 .collect(Collectors.toMap(OrderItem::getProduct, OrderItem::getQuantity, Integer::sum))
@@ -160,25 +173,28 @@ public class TestUtils {
                 .collect(Collectors.toList());
     }
 
-    private static OrderItem createOrderItem() {
+    private static OrderItem createOrderItem()
+    {
         final OrderItem orderItem = new OrderItem();
         orderItem.setProduct(generatedProducts.get(rand.nextInt(generatedProducts.size())));
         orderItem.setQuantity(randomInt(MIN_PRODUCT_QUANTITY, MAX_PRODUCT_QUANTITY));
         return orderItem;
     }
 
-    private static Product createProduct(final int i) {
+    private static Product createProduct(final int i)
+    {
         final int idx = i % productNames.size();
         final Product product = new Product();
         productId += idx * PRODUCT_ID_INCREMENT;
         product.setId(productId);
         product.setName(productNames.get(idx));
         product.setColor(Product.Color.values()[idx % Product.Color.values().length]);
-        product.setPrice(new BigDecimal((double)randomInt(MIN_PRODUCT_PRICE, MAX_PRODUCT_PRICE) / 100));
-        return  product;
+        product.setPrice(new BigDecimal((double) randomInt(MIN_PRODUCT_PRICE, MAX_PRODUCT_PRICE) / 100));
+        return product;
     }
 
-    private static AddressInfo createAddressInfo() {
+    private static AddressInfo createAddressInfo()
+    {
         final int cityIdx = rand.nextInt(cities.size());
         final int stIdx = rand.nextInt(streets.size());
         final AddressInfo addressInfo = new AddressInfo();
@@ -189,7 +205,8 @@ public class TestUtils {
         return addressInfo;
     }
 
-    private static PaymentInfo createPaymentInfo(final int i) {
+    private static PaymentInfo createPaymentInfo(final int i)
+    {
         final int idx = i % cardNumbers.size();
         final PaymentInfo paymentInfo = new PaymentInfo();
         paymentInfo.setCardNumber(cardNumbers.get(idx));
@@ -198,20 +215,24 @@ public class TestUtils {
         return paymentInfo;
     }
 
-    private static <T> List<T> generate(final int count, final Supplier<T> supplier) {
+    private static <T> List<T> generate(final int count, final Supplier<T> supplier)
+    {
         return IntStream.range(0, count)
                 .mapToObj(e -> supplier.get())
                 .collect(Collectors.toList());
     }
 
-    private static <T> List<T> generate(final int count, final IntFunction<T> supplier) {
+    private static <T> List<T> generate(final int count, final IntFunction<T> supplier)
+    {
         return IntStream.range(0, count)
                 .mapToObj(supplier)
                 .collect(Collectors.toList());
     }
 
-    private static int randomInt(final int min, final int max) {
-        if (min >= max) {
+    private static int randomInt(final int min, final int max)
+    {
+        if (min >= max)
+        {
             throw new IllegalArgumentException("min >= max");
         }
         return rand.nextInt(max - min) + min;
