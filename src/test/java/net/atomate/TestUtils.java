@@ -47,10 +47,10 @@ public class TestUtils
     private static final List<String> countries = new ArrayList<>();
     private static final List<String> streets = new ArrayList<>();
     private static final List<String> cardNumbers = new ArrayList<>();
-    private static final List<PaymentInfo> generatedPaymentInfos = generatePaymentInfos();
+    private static final List<PaymentInfo> generatedPaymentInfos;
     private static long orderId = 0;
     private static long productId = 0;
-    private static final List<Product> generatedProducts = generateProducts();
+    private static final List<Product> generatedProducts;
 
     static
     {
@@ -115,6 +115,9 @@ public class TestUtils
         cardNumbers.add("4111 3456 5454 9900");
         cardNumbers.add("9785 5409 1111 5555");
         cardNumbers.add("6677 5432 9587 1670");
+
+        generatedProducts = generateProducts();
+        generatedPaymentInfos = generatePaymentInfos();
     }
 
     public static List<Product> generateProducts()
