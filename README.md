@@ -12,3 +12,4 @@ for some of the methods.asdasd This includes:
   to collect statistical information about customers and orders of the shop using Stream API
 ddd
   
+asdasd
