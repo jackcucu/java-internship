@@ -10,5 +10,5 @@ composing an e-shop.
 for some of the methods. This includes:
   - `com.expertsoft.tasks.OrderStats` - implement methods 
   to collect statistical information about customers and orders of the shop using Stream API
-
+ddd
   
