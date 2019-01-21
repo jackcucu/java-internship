@@ -7,7 +7,7 @@ composing an e-shop.
 - Package `com.expertsoft.model` contains domain model classes, such as `Order`, `Customer` and `Product`
 
 - Package `com.expetsoft.tasks` contains task classes with missing implementation 
-for some of the methods. This includes:
+for some of the methods.asdasd This includes:
   - `com.expertsoft.tasks.OrderStats` - implement methods 
   to collect statistical information about customers and orders of the shop using Stream API
 ddd
